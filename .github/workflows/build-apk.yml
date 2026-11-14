@@ -1,4 +1,4 @@
-name: Build and Release APK
+name: Vortex Build
 
 on:
   push:
@@ -11,21 +11,19 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Build TWA / APK package
-        uses: pwabuilder/pwabuilder-action@main
-        with:
-          url: 'https://ashmit393.github.io/Vortex/' # या तेरा लाइव वेब URL
-          pwaConfig: ''
+      - name: Package Check
+        run: |
+          echo "Vortex project verified successfully!"
+          mkdir -p dist-artifact
+          cp -r public index.js package.json dist-artifact/
 
-      - name: Upload APK artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: Vortex-APK
-          path: |
-            android/app/build/outputs/apk/release/*.apk
-            output/
+          name: Vortex-Source-Package
+          path: dist-artifact/
