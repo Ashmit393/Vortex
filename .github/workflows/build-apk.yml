@@ -1,4 +1,4 @@
-name: Build Vortex APK
+name: Build and Release APK
 
 on:
   push:
@@ -16,8 +16,16 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Build TWA / APK package
+        uses: pwabuilder/pwabuilder-action@main
+        with:
+          url: 'https://ashmit393.github.io/Vortex/' # या तेरा लाइव वेब URL
+          pwaConfig: ''
 
-      - name: Build Info
-        run: echo "Vortex backend and frontend ready for packaging by Asmit Singh"
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Vortex-APK
+          path: |
+            android/app/build/outputs/apk/release/*.apk
+            output/
